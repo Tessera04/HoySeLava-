@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Weather App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
@@ -59,7 +59,53 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20.0,),
-          Image.asset('images/soleado.png'),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: Colors.lightBlue.shade200,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.shade200,
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(2, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'images/soleado.png',
+                    width: 200,
+                    height: 200,
+                  ),
+                  const SizedBox(width: 32.0,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const[
+                      Text('28°C',
+                        style: TextStyle(
+                          fontSize: 38,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text('Soleado',
+                        style: TextStyle(
+                          fontSize: 28,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

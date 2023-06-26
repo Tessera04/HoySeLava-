@@ -33,6 +33,11 @@ Widget additionalInfo(String viento, String humedad, String termica, String lava
                 ),
                 const SizedBox(height: 18.0,),
                 Text(
+                  "Termica", 
+                  style: titleFont,
+                ),
+                const SizedBox(height: 18.0,),
+                Text(
                   "Puedo Lavar?", 
                   style: titleFont,
                 ),
@@ -50,6 +55,11 @@ Widget additionalInfo(String viento, String humedad, String termica, String lava
                 const SizedBox(height: 18.0,),
                 Text(
                   "$humedad",
+                  style: infoFont,
+                ),
+                const SizedBox(height: 18.0,),
+                Text(
+                  "$termica",
                   style: infoFont,
                 ),
                 const SizedBox(height: 18.0,),

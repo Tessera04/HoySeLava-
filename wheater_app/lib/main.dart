@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
-import 'package:wheater_app/model/add_info.dart';
+import 'package:wheater_app/services/weather_api_client.dart';
+import 'package:wheater_app/views/add_info.dart';
 import 'package:wheater_app/model/current_weather.dart';
+import 'package:wheater_app/model/weather_model.dart';
 
 WeatherFactory weatherFactory = WeatherFactory("6321e2106304d9793d42460d6a662f15");
 
@@ -28,6 +32,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  WeatherApiClient client = WeatherApiClient();
+  Weather2? data;
+
+  Future<void> getData() async{
+    data = await client.getCurrentWeather("London");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,27 +58,35 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white70,
           ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          currentWeather(Icons.wb_sunny_rounded, "26.3", "Buenos Aires", "Soleado"),
-          const SizedBox(
-            height: 65.0,
-          ),
-          const Text(
-            "Informacion Adicional",
-            style: TextStyle(
-              fontSize: 20.0, 
-              color: Colors.blue,
-            ),
-          ),
-          Divider(),
-          SizedBox(
-            height: 20.0,
-          ),
-          additionalInfo("24", "2", "25g", "Si se puede lavar")
-        ],
-      ),
+      body: FutureBuilder(
+        future: getData(),
+        builder: (context, snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                currentWeather(Icons.wb_sunny_rounded, "${data!.temp}°", "${data!.cityName}", "${data!.status}"),
+                const SizedBox(
+                  height: 65.0,
+                ),
+                const Text(
+                  "Informacion Adicional",
+                  style: TextStyle(
+                    fontSize: 20.0, 
+                    color: Colors.blue,
+                  ),
+                ),
+                const Divider(),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                additionalInfo("${data!.viento}", "${data!.humedad}%", "${data!.termica}°", "Si se puede lavar")
+              ],
+            );
+          }
+          return Container();
+        },
+      )
     );
   }
 }

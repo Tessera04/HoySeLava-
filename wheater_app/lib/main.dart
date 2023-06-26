@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
+import 'package:wheater_app/model/add_info.dart';
+import 'package:wheater_app/model/current_weather.dart';
 
 WeatherFactory weatherFactory = WeatherFactory("6321e2106304d9793d42460d6a662f15");
 
@@ -8,24 +10,24 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Weather App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-      ),
-      home: const MyHomePage(),
+    return const MaterialApp(
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,73 +41,31 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          onPressed: (){}, 
+          icon: Icon(Icons.menu),
+          color: Colors.white70,
+          ),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:[
-          const Text('Hoy no conviene', 
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          currentWeather(Icons.wb_sunny_rounded, "26.3", "Buenos Aires", "Soleado"),
+          const SizedBox(
+            height: 65.0,
+          ),
+          const Text(
+            "Informacion Adicional",
             style: TextStyle(
-              color: Colors.lightBlue,
-              fontSize: 45,
-              fontWeight: FontWeight.bold,
+              fontSize: 20.0, 
+              color: Colors.blue,
             ),
           ),
-          const SizedBox(height: 20.0,),
-          const Text('Hoy si conviene',
-            style: TextStyle(
-              color: Colors.lightBlue,
-              fontSize: 45,
-              fontWeight: FontWeight.bold,
-            ),
+          Divider(),
+          SizedBox(
+            height: 20.0,
           ),
-          const SizedBox(height: 20.0,),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              padding: const EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: Colors.lightBlue.shade200,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blue.shade200,
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(2, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'images/soleado.png',
-                    width: 200,
-                    height: 200,
-                  ),
-                  const SizedBox(width: 32.0,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const[
-                      Text('28°C',
-                        style: TextStyle(
-                          fontSize: 38,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Text('Soleado',
-                        style: TextStyle(
-                          fontSize: 28,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          additionalInfo("24", "2", "25g", "Si se puede lavar")
         ],
       ),
     );
